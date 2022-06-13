@@ -6,6 +6,7 @@ import lombok.Data;
 public class UserDto {
 
     private String id;
+    private String userEmail;
     private String userName;
     private String password;
     private boolean useFlag;

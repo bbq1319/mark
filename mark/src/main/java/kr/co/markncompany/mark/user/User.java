@@ -22,6 +22,7 @@ public class User implements UserDetails {
     @Id
     @Column(name = "user_id")
     private String id;
+    private String userEmail;
     private String userName;
     private String password;
     private boolean useFlag;
