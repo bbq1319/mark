@@ -2,53 +2,57 @@ import Seo from "../components/Seo";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { useState } from "react";
+import Modal from "../components/modal/Modal";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function login() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-  };
 
-  const MySwal = withReactContent(Swal);
-
-  const openSwal = () => {
-    MySwal.fire({
-      title: <p>Hello World</p>,
-    });
+    axios
+      .post("http://localhost:8080/api/v1/login", {
+        userEmail: data.userEmail,
+        password: data.password,
+      })
+      .then((res) => {
+        console.log(res);
+        router.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <div className="login">
       <Seo title="Login" />
-
       <form onSubmit={handleSubmit(onSubmit)}>
-        {errors.id?.type === "required" && openSwal()}
-
         <img className="login-logo" src="/innologo.png" />
         <div>
           <input
-            {...register("id", { required: true })}
-            className="login-id"
-            id="memberId"
+            {...register("userEmail", { required: true })}
             type="text"
             autoComplete="false"
           />
+          {errors.id?.type === "required" && "First name is required"}
           <i className="icon">
             <FontAwesomeIcon icon={faUser} />
           </i>
         </div>
         <div>
           <input
-            {...register("pw", { required: true })}
-            className="login-pw"
-            id="password"
+            {...register("password", { required: true })}
             type="password"
           />
           <i className="icon">
