@@ -2,27 +2,35 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Seo from "../components/Seo";
+import { tokenState } from "../components/recoil/states";
+import { useRecoilState } from "recoil";
 
 export default function Home() {
   const [userList, setUserList] = useState();
-  const [token, checkToken] = useState();
+  const [token, setToken] = useRecoilState(tokenState);
   const router = useRouter();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/v1/check/token")
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
+    console.log(token);
 
-        if (error.response.data.error === "invalid token") {
-          console.log("hi");
-          router.push("/login");
-        }
-      });
+    if (token === "") router.push("/login");
   }, []);
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8080/api/v1/check/token")
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+
+  //       if (error.response.data.error === "invalid token") {
+  //         console.log("hi");
+  //         router.push("/login");
+  //       }
+  //     });
+  // }, []);
 
   // useEffect(() => {
   //   axios.get("/api/todos").then((res) => {

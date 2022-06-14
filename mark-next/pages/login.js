@@ -8,8 +8,12 @@ import { useState } from "react";
 import Modal from "../components/modal/Modal";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { atom } from "recoil";
+import { tokenState } from "../components/recoil/states";
+import { useRecoilState } from "recoil";
 
 export default function login() {
+  const [token, setToken] = useRecoilState(tokenState);
   const router = useRouter();
   const {
     register,
@@ -25,9 +29,13 @@ export default function login() {
         userEmail: data.userEmail,
         password: data.password,
       })
-      .then((res) => {
+      .then(async (res) => {
         console.log(res);
-        router.push("/");
+
+        if (res.data.data.token != null) {
+          setToken(res.data.data.token);
+          router.push("/");
+        }
       })
       .catch((error) => {
         console.log(error);
