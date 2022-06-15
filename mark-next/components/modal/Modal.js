@@ -8,7 +8,8 @@ export default function Modal({ active, children }) {
 
   return (
     <>
-      <div className={active ? "active modal" : "modal"}>
+      <div>모달</div>
+      {/* <div className={active ? "active modal" : "modal"}>
         {children}
         <button type="button" onClick={closeModal()}>
           닫기
@@ -33,7 +34,7 @@ export default function Modal({ active, children }) {
           padding: 1rem;
           box-sizing: border-box;
         }
-      `}</style>
+      `}</style> */}
     </>
   );
 }
