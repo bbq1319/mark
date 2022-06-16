@@ -1,50 +1,61 @@
+import APIs from "../api/index";
 import Seo from "../components/Seo";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../components/modal/Modal";
-import axios from "axios";
+
 import { useRouter } from "next/router";
-import { atom } from "recoil";
 import { tokenState } from "../components/recoil/states";
 import { useRecoilState } from "recoil";
 
-export default function login() {
+export default function Login() {
   const [token, setToken] = useRecoilState(tokenState);
+  const [isError, setIsError] = useState(false);
   const router = useRouter();
+  const MySwal = withReactContent(Swal);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (loginData) => {
+    const response = await APIs.login(loginData);
+    console.log("response==>", response);
 
-    axios
-      .post("http://localhost:8080/api/v1/login", {
-        userEmail: data.userEmail,
-        password: data.password,
-      })
-      .then(async (res) => {
-        console.log(res);
+    if (response === "error") {
+      // 임시로 요따구로 했어요
+      setIsError(true);
+      return;
+    }
 
-        if (res.data.data.token != null) {
-          setToken(res.data.data.token);
-          router.push("/");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // 여기서 토큰값 response.data.data.token 로직 작성하면 되겠쥬?
   };
+
+  const openSwal = () => {
+    MySwal.fire({
+      title: <strong>로그인 실패</strong>,
+      html: <span style={{ color: "tomato" }}>똑바로 하시라구욧 😡</span>,
+      icon: "error",
+    });
+
+    setIsError(false);
+  };
+
+  useEffect(() => {
+    if (isError) {
+      openSwal();
+    }
+  }, [isError]);
 
   return (
     <div className="login">
       <Seo title="Login" />
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <img className="login-logo" src="/innologo.png" />
         <div>
