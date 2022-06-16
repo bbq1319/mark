@@ -32,6 +32,7 @@ public class User implements UserDetails {
 
     public User(UserDto userDto) throws Exception {
         this.id = userDto.getId();
+        this.userEmail = userDto.getUserEmail();
         this.password = PasswordEncryption.encryption(userDto.getPassword());
         this.userName = userDto.getUserName();
         this.useFlag = true;

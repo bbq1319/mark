@@ -58,6 +58,7 @@ public class LoginController {
                 .builder()
                 .token(token)
                 .id(user.getId())
+                .userEmail(user.getUserEmail())
                 .userName(user.getUsername())
                 .roles(user.getRoles())
                 .build()));

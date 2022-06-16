@@ -1,9 +1,8 @@
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Seo from "../components/Seo";
-import { tokenState } from "../components/recoil/states";
+import { tokenState } from "../recoil/states";
 import { useRecoilState } from "recoil";
+import Seo from "../components/Seo";
 
 export default function Home() {
   const [userList, setUserList] = useState();
@@ -18,7 +17,7 @@ export default function Home() {
 
   // useEffect(() => {
   //   axios
-  //     .get("http://localhost:8080/api/v1/check/token")
+  //     .get("http://localhost:8090/api/v1/check/token")
   //     .then((res) => {
   //       console.log(res);
   //     })
@@ -37,7 +36,7 @@ export default function Home() {
   //     console.log(res.data);
   //   })(async () => {
   //     const result = await (
-  //       await fetch(`http://localhost:8080/api/v1/check/token`)
+  //       await fetch(`http://localhost:8090/api/v1/check/token`)
   //     ).json();
   //     // const results = await (await fetch(`/api/userList`)).json();
 

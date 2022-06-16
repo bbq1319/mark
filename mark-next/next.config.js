@@ -16,7 +16,7 @@ const nextConfig = {
     return [
       {
         source: "/api/userList",
-        destination: `http://localhost:8080/api/v1/userList`,
+        destination: `http://localhost:8090/api/v1/userList`,
       },
     ];
   },
