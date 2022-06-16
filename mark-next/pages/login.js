@@ -1,16 +1,21 @@
 import APIs from "../api/index";
 import Seo from "../components/Seo";
-import { useForm } from "react-hook-form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
+
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { useEffect, useState } from "react";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { tokenState } from "../recoil/states";
 import { useRecoilState } from "recoil";
-import { networkError, inputEmptyError } from "../utils/modalContents";
+import { useForm } from "react-hook-form";
+
+import { tokenState } from "../recoil/states";
+import { networkError } from "../utils/modalContents";
+
+import styled from "@emotion/styled";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default function Login() {
   const [token, setToken] = useRecoilState(tokenState);
@@ -50,117 +55,113 @@ export default function Login() {
   }, [isError]);
 
   return (
-    <div className="login">
+    <LoginContainer>
       <Seo title="Login" />
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <img className="login-logo" src="/innologo.png" />
-        <div>
-          <input
+      <LoginForm onSubmit={handleSubmit(onSubmit)}>
+        <img
+          className="login-logo"
+          src="/innologo.png"
+          style={{ width: "180px", marginBottom: "30px" }}
+        />
+        <LoginFormChildDiv>
+          <LoginInput
             {...register("userEmail", { required: true })}
             type="text"
             autoComplete="false"
           />
           {errors.id?.type === "required" && "First name is required"}
-          <i className="icon">
+          <Icon>
             <FontAwesomeIcon icon={faUser} />
-          </i>
-        </div>
-        <div>
-          <input
+          </Icon>
+        </LoginFormChildDiv>
+        <LoginFormChildDiv>
+          <LoginInput
             {...register("password", { required: true })}
             type="password"
           />
-          <i className="icon">
+          <Icon>
             <FontAwesomeIcon icon={faUnlockAlt} />
-          </i>
-        </div>
-        <button className="login-btn" type="submit">
-          Log in
-        </button>
-      </form>
-
-      <style jsx>{`
-        .login {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100vw;
-          height: 100vh;
-          background-image: url("/bg.jpeg");
-        }
-
-        .login::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          opacity: 0.4;
-          background-color: black;
-        }
-
-        .login form {
-          position: relative;
-          text-align: center;
-          margin-bottom: 30px;
-        }
-
-        .login form div {
-          position: relative;
-          padding: 10px;
-        }
-
-        .login form .icon {
-          position: absolute;
-          left: 30px;
-          top: 25px;
-          color: white;
-          opacity: 0.6;
-        }
-
-        .login form input {
-          width: 200px;
-          height: 50px;
-          border-radius: 25px;
-          padding: 0 20px 0 45px;
-          border: 0px;
-          color: white;
-          background-color: #5a515e;
-        }
-
-        .login form input:focus {
-          outline: 2px solid #2a2a3a;
-        }
-
-        .login form input:-webkit-autofill,
-        .login form input:-webkit-autofill:hover,
-        .login form input:-webkit-autofill:focus,
-        .login form input:-webkit-autofill:active {
-          transition: background-color 5000s ease-in-out 0s;
-          -webkit-transition: background-color 9999s ease-out;
-          -webkit-box-shadow: 0 0 0px 1000px #5a515e inset !important;
-          -webkit-text-fill-color: white !important;
-        }
-
-        .login-btn {
-          width: 265px;
-          height: 50px;
-          margin: 10px 0 0 0;
-          border-radius: 25px;
-          border: 0px;
-          font-size: 14px;
-          font-weight: bold;
-          color: white;
-          background-color: #fb3566;
-        }
-
-        .login-logo {
-          width: 180px;
-          margin-bottom: 30px;
-        }
-      `}</style>
-    </div>
+          </Icon>
+        </LoginFormChildDiv>
+        <LoginButton type="submit">Log in</LoginButton>
+      </LoginForm>
+    </LoginContainer>
   );
 }
+
+const LoginContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("/bg.jpeg");
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.4;
+    background-color: black;
+  }
+`;
+
+const LoginForm = styled.form`
+  position: relative;
+  text-align: center;
+  margin-bottom: 30px;
+`;
+
+const LoginFormChildDiv = styled.div`
+  position: relative;
+  padding: 10px;
+`;
+
+const Icon = styled.i`
+  position: absolute;
+  left: 30px;
+  top: 25px;
+  color: white;
+  opacity: 0.6;
+`;
+
+const LoginInput = styled.input`
+  width: 200px;
+  height: 50px;
+  border-radius: 25px;
+  padding: 0 20px 0 45px;
+  border: 0px;
+  color: white;
+  background-color: #5a515e;
+
+  &:focus {
+    outline: 2px solid #2a2a3a;
+  }
+
+  &::-webkit-autofill,
+  &::-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-transition: background-color 9999s ease-out;
+    box-shadow: 0 0 0px 1000px #5a515e inset !important;
+    -webkit-box-shadow: 0 0 0px 1000px #5a515e inset !important;
+    -webkit-text-fill-color: white !important;
+  }
+`;
+
+const LoginButton = styled.button`
+  width: 265px;
+  height: 50px;
+  margin: 10px 0 0 0;
+  border-radius: 25px;
+  border: 0px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  background-color: #fb3566;
+`;
