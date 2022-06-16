@@ -6,11 +6,11 @@ import { faUser, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useEffect, useState } from "react";
-import Modal from "../components/modal/Modal";
 
 import { useRouter } from "next/router";
 import { tokenState } from "../components/recoil/states";
 import { useRecoilState } from "recoil";
+import { networkError, inputEmptyError } from "../utils/modalContents";
 
 export default function Login() {
   const [token, setToken] = useRecoilState(tokenState);
@@ -23,6 +23,7 @@ export default function Login() {
     watch,
     formState: { errors },
   } = useForm();
+
   const onSubmit = async (loginData) => {
     const response = await APIs.login(loginData);
     console.log("response==>", response);
@@ -37,12 +38,7 @@ export default function Login() {
   };
 
   const openSwal = () => {
-    MySwal.fire({
-      title: <strong>로그인 실패</strong>,
-      html: <span style={{ color: "tomato" }}>똑바로 하시라구욧 😡</span>,
-      icon: "error",
-    });
-
+    MySwal.fire(networkError);
     setIsError(false);
   };
 
