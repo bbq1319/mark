@@ -8,7 +8,7 @@ import withReactContent from "sweetalert2-react-content";
 import { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
-import { tokenState } from "../components/recoil/states";
+import { tokenState } from "../recoil/states";
 import { useRecoilState } from "recoil";
 import { networkError, inputEmptyError } from "../utils/modalContents";
 
@@ -35,6 +35,7 @@ export default function Login() {
     }
 
     // 여기서 토큰값 response.data.data.token 로직 작성하면 되겠쥬?
+    return response.data.data.token ? setToken(response.data.data.token) : null;
   };
 
   const openSwal = () => {
