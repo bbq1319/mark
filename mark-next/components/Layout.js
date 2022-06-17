@@ -1,6 +1,13 @@
+import { useRecoilValue } from "recoil";
+import { loadingState } from "../recoil/states";
+import Spinner from "./Spinner";
+
 export default function Layout({ children }) {
+  const isLoading = useRecoilValue(loadingState);
+
   return (
     <>
+      {isLoading && <Spinner />}
       {children}
       <style jsx>{`
         #app {

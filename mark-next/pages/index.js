@@ -5,7 +5,6 @@ import { useRecoilState } from "recoil";
 import Seo from "../components/Seo";
 
 export default function Home() {
-  const [userList, setUserList] = useState();
   const [token, setToken] = useRecoilState(tokenState);
   const [login, setLogin] = useRecoilState(loginState);
   const router = useRouter();
@@ -46,12 +45,7 @@ export default function Home() {
   return (
     <div>
       <Seo title="Home" />
-      {!userList && <h4>Loading...</h4>}
-      {userList?.map((user) => (
-        <div key={user.id}>
-          <h4>{user.username}</h4>
-        </div>
-      ))}
+      뽀잉
     </div>
   );
 }
