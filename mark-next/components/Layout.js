@@ -1,16 +1,23 @@
+import { useRouter } from "next/router";
+import { useRecoilValue } from "recoil";
+import { loadingState } from "../recoil/states";
+import SideNavBar from "./SideNavBar";
+import Spinner from "./Spinner";
+import styled from "@emotion/styled";
+
 export default function Layout({ children }) {
+  const { pathname } = useRouter();
+  const isLoaded = useRecoilValue(loadingState);
+
   return (
     <>
-      {children}
-      <style jsx>{`
-        #app {
-          /* font-family: Avenir, Helvetica, Arial, sans-serif;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          padding-left: 220px;
-          margin: 50px; */
-        }
-      `}</style>
+      {!isLoaded && <Spinner />}
+      {pathname !== "/login" && <SideNavBar />}
+      <Main>{children}</Main>
     </>
   );
 }
+
+const Main = styled.main`
+  margin-left: 17rem;
+`;

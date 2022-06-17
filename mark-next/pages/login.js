@@ -4,12 +4,12 @@ import Seo from "../components/Seo";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 
-import { tokenState } from "../recoil/states";
+import { tokenState, loginState, loadingState } from "../recoil/states";
 import { networkError } from "../utils/modalContents";
 
 import styled from "@emotion/styled";
@@ -19,7 +19,9 @@ import { faUser, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default function Login() {
   const [token, setToken] = useRecoilState(tokenState);
-  const [isError, setIsError] = useState(false);
+  const [login, setLogin] = useRecoilState(loginState);
+  const isLoaded = useSetRecoilState(loadingState);
+
   const router = useRouter();
   const MySwal = withReactContent(Swal);
   const {
@@ -29,36 +31,36 @@ export default function Login() {
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    if (token && login) {
+      router.push("/");
+    }
+  }, []);
+
   const onSubmit = async (loginData) => {
+    isLoaded(false);
     const response = await APIs.login(loginData);
     console.log("response==>", response);
+    if (response) {
+      isLoaded(true);
+    }
 
-    if (response === "error") {
-      // 임시로 요따구로 했어요
-      setIsError(true);
+    if (response.status === 500) {
+      openSwal(networkError);
       return;
     }
 
     // 로그인 성공!
     if (response != null && response.status == 200) {
       response.data.data.token ? setToken(response.data.data.token) : null;
+      setLogin(true);
       router.push("/");
     }
-
-    // 여기서 토큰값 response.data.data.token 로직 작성하면 되겠쥬?
-    // return response.data.data.token ? setToken(response.data.data.token) : null;
   };
 
-  const openSwal = () => {
-    MySwal.fire(networkError);
-    setIsError(false);
+  const openSwal = (errorType) => {
+    MySwal.fire(errorType);
   };
-
-  useEffect(() => {
-    if (isError) {
-      openSwal();
-    }
-  }, [isError]);
 
   return (
     <LoginContainer>
@@ -148,8 +150,8 @@ const LoginInput = styled.input`
     outline: 2px solid #2a2a3a;
   }
 
-  &::-webkit-autofill,
-  &::-webkit-autofill:hover,
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
   &:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;

@@ -6,9 +6,9 @@ export default class APIs {
       const response = await axios.post("login", loginData);
       return response;
     } catch (error) {
-      console.error("😡 😡 😡", error.message);
-      // 에러일 경우 리턴값 재정의 필요합니다 민섭님~
-      return "error";
+      console.error("에러메세지: ", error.message);
+
+      return error.response;
     }
   };
 }
