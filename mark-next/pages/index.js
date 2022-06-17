@@ -13,39 +13,10 @@ export default function Home() {
     if (token === "") router.push("/login");
   }, []);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8090/api/v1/check/token")
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-
-  //       if (error.response.data.error === "invalid token") {
-  //         console.log("hi");
-  //         router.push("/login");
-  //       }
-  //     });
-  // }, []);
-
-  // useEffect(() => {
-  //   axios.get("/api/todos").then((res) => {
-  //     console.log(res.data);
-  //   })(async () => {
-  //     const result = await (
-  //       await fetch(`http://localhost:8090/api/v1/check/token`)
-  //     ).json();
-  //     // const results = await (await fetch(`/api/userList`)).json();
-
-  //     console.log(result);
-  //   })();
-  // }, []);
-
   return (
     <div>
       <Seo title="Home" />
-      뽀잉
+      여기는 메인페이지
     </div>
   );
 }

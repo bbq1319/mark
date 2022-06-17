@@ -4,22 +4,23 @@ import Seo from "../components/Seo";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
+import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 
-import { tokenState, loginState } from "../recoil/states";
+import { tokenState, loginState, loadingState } from "../recoil/states";
 import { networkError } from "../utils/modalContents";
 
 import styled from "@emotion/styled";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
 
 export default function Login() {
   const [token, setToken] = useRecoilState(tokenState);
   const [login, setLogin] = useRecoilState(loginState);
+  const isLoaded = useSetRecoilState(loadingState);
 
   const router = useRouter();
   const MySwal = withReactContent(Swal);
@@ -37,8 +38,12 @@ export default function Login() {
   }, []);
 
   const onSubmit = async (loginData) => {
+    isLoaded(false);
     const response = await APIs.login(loginData);
     console.log("response==>", response);
+    if (response) {
+      isLoaded(true);
+    }
 
     if (response.status === 500) {
       openSwal(networkError);

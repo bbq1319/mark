@@ -6,7 +6,7 @@ export default function Spinner() {
       <FadingCircle>
         <Circle />
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((num) => (
-          <FollowingCircle idx={num + 1} />
+          <FollowingCircle idx={num} key={num} />
         ))}
       </FadingCircle>
     </SpinnerContainer>
@@ -64,9 +64,9 @@ const Circle = styled.div`
 `;
 
 const FollowingCircle = styled(Circle)`
-  transform: rotate(${(props) => (props.idx - 1) * 30}deg);
+  transform: rotate(${(props) => props.idx * 30}deg);
 
   &:before {
-    animation-delay: ${(props) => props.idx / 10 - 0.1}s;
+    animation-delay: ${(props) => props.idx / 10}s;
   }
 `;
