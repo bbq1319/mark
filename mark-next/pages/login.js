@@ -138,7 +138,7 @@ const Icon = styled.i`
 `;
 
 const LoginInput = styled.input`
-  width: 200px;
+  width: 265px;
   height: 50px;
   border-radius: 25px;
   padding: 0 20px 0 45px;

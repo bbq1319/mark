@@ -13,11 +13,11 @@ export default function Layout({ children }) {
     <>
       {!isLoaded && <Spinner />}
       {pathname !== "/login" && <SideNavBar />}
-      <Main>{children}</Main>
+      <Main pathname={pathname}>{children}</Main>
     </>
   );
 }
 
 const Main = styled.main`
-  margin-left: 17rem;
+  margin-left: ${(props) => (props.pathname === "/login" ? 0 : "17rem")};
 `;
