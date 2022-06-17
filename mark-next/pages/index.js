@@ -1,17 +1,16 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { tokenState } from "../recoil/states";
+import { tokenState, loginState } from "../recoil/states";
 import { useRecoilState } from "recoil";
 import Seo from "../components/Seo";
 
 export default function Home() {
   const [userList, setUserList] = useState();
   const [token, setToken] = useRecoilState(tokenState);
+  const [login, setLogin] = useRecoilState(loginState);
   const router = useRouter();
 
   useEffect(() => {
-    console.log(token);
-
     if (token === "") router.push("/login");
   }, []);
 

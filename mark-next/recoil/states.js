@@ -1,8 +1,16 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
 
-const tokenState = atom({
+const { persistAtom } = recoilPersist();
+
+export const tokenState = atom({
   key: "tokenState",
   default: "",
+  effects_UNSTABLE: [persistAtom],
 });
 
-export { tokenState };
+export const loginState = atom({
+  key: "loginState",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});
