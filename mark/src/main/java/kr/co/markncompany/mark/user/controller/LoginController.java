@@ -50,7 +50,7 @@ public class LoginController {
         if (!user.isUseFlag())
             throw new IllegalArgumentException("비활성화된 사용자입니다. 관리자에게 문의해주세요.");
 
-        String token = jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
+        String token = jwtTokenProvider.createToken(user.getId(), user.getRoles());
         String ip = ClientInfoUtil.getClientIp(request);
         String ua = ClientInfoUtil.getUserAgent(request);
 
@@ -64,8 +64,8 @@ public class LoginController {
                 .build()));
     }
 
-    @GetMapping("/check/token")
-    public ResponseEntity checkToken(HttpServletRequest request) {
+    @PostMapping("/check/token")
+    public ResponseEntity checkToken(HttpServletRequest request) throws Exception {
         if (!TokenUtil.checkJwt(request))
             return new ResponseEntity(new ErrorResponse("invalid token"), HttpStatus.UNAUTHORIZED);
 

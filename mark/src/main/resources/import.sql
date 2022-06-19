@@ -7,3 +7,11 @@ INSERT INTO USER_ROLES (user_id, roles) VALUES('US0001', 'ROLE_ADMIN');
 INSERT INTO USER_ROLES (user_id, roles) VALUES('US0001', 'ROLE_USER');
 INSERT INTO USER_ROLES (user_id, roles) VALUES('US0002', 'ROLE_ADMIN');
 INSERT INTO USER_ROLES (user_id, roles) VALUES('US0002', 'ROLE_USER');
+
+-- MENU
+insert into menu value ('MN0001', '에스프레소', 'BV', 4000, 99, 'system', now(), 'system', now());
+insert into menu value ('MN0002', '에스프레소 마끼야또', 'BV', 4500, 99, 'system', now(), 'system', now());
+insert into menu value ('MN0003', '아메리카노', 'BV', 4000, 99, 'system', now(), 'system', now());
+insert into menu value ('MN0004', '카푸치노', 'BV', 5000, 99, 'system', now(), 'system', now());
+insert into menu value ('MN0005', '카페 라떼', 'BV', 5000, 99, 'system', now(), 'system', now());
+insert into menu value ('MN0006', '아인슈페너 / 아임쑥페너', 'BV', 5500, 99, 'system', now(), 'system', now());

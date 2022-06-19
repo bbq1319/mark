@@ -25,3 +25,9 @@ export const emptyInputError = {
   html: <span style={{ color: "tomato" }}>😡</span>,
   icon: "error",
 };
+
+export const expiredJwtException = {
+  title: <strong>로그인 에러</strong>,
+  html: <span>토큰이 만료되었습니다.</span>,
+  icon: "error",
+};

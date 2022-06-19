@@ -34,7 +34,7 @@ export default function SideNavBar() {
               <NavMenu
                 className={router.pathname === "/table" ? "active" : null}
               >
-                테이블
+                음료주문
               </NavMenu>
             </Link>
           </li>

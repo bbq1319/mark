@@ -33,7 +33,7 @@ export default function Login() {
 
   useEffect(() => {
     if (token && login) {
-      router.push("/");
+      // router.push("/");
     }
   }, []);
 
@@ -52,7 +52,10 @@ export default function Login() {
 
     // 로그인 성공!
     if (response != null && response.status == 200) {
-      response.data.data.token ? setToken(response.data.data.token) : null;
+      const resultToken = response.data.data.token;
+      if (resultToken != null) setToken(resultToken);
+      console.log(resultToken);
+      // response.data.data.token ? setToken(response.data.data.token) : null;
       setLogin(true);
       router.push("/");
     }

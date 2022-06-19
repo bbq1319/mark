@@ -1,5 +1,6 @@
 package kr.co.markncompany.mark.order;
 
+import kr.co.markncompany.mark.common.BaseEntity;
 import kr.co.markncompany.mark.order.dto.MenuDto;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Menu {
+public class Menu extends BaseEntity {
 
     @Id
     @Column(name = "menu_id")

@@ -15,7 +15,7 @@ public class TokenUtil {
         return null;
     }
 
-    public static boolean checkJwt(HttpServletRequest request) {
+    public static boolean checkJwt(HttpServletRequest request) throws Exception {
         boolean isValidJwt = false;
         String jwt = getJwt(request);
         if (jwt != null)
