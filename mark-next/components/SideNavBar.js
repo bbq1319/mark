@@ -23,14 +23,14 @@ export default function SideNavBar() {
       <SideNav>
         <Navbar>
           <li>
-            <Link href={"/ "}>
+            <Link href={"/ "} passHref>
               <NavMenu className={router.pathname === "/" ? "active" : null}>
                 대시보드
               </NavMenu>
             </Link>
           </li>
           <li>
-            <Link href={"/table"}>
+            <Link href={"/table"} passHref>
               <NavMenu
                 className={router.pathname === "/table" ? "active" : null}
               >
@@ -105,6 +105,7 @@ const NavMenu = styled.a`
   padding: 0.75rem 1.5rem;
   margin: 0 1rem;
   margin-bottom: 1.5px;
+  color: #fff;
   cursor: pointer;
   border-radius: 0.375rem;
 
