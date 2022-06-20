@@ -1,4 +1,3 @@
-import APIs from "../api/index";
 import Seo from "../components/Seo";
 
 import Swal from "sweetalert2";
@@ -6,10 +5,11 @@ import withReactContent from "sweetalert2-react-content";
 
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 
 import { tokenState, loginState, loadingState } from "../recoil/states";
+import { apiSelector } from "../recoil/selectors";
 import { networkError } from "../utils/modalContents";
 
 import styled from "@emotion/styled";
@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default function Login() {
+  const APIs = useRecoilValue(apiSelector);
   const [token, setToken] = useRecoilState(tokenState);
   const [login, setLogin] = useRecoilState(loginState);
   const isLoaded = useSetRecoilState(loadingState);
