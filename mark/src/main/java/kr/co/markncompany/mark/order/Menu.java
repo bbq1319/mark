@@ -7,6 +7,9 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,6 +25,10 @@ public class Menu extends BaseEntity {
     private String menuType;
     private int menuPrice;
     private int menuStock;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "menu")
+    private List<MenuOption> menuOptions = new ArrayList<>();
 
     public Menu(MenuDto menuDto) {
         this.id = menuDto.getId();
