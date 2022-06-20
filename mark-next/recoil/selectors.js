@@ -1,13 +1,12 @@
-import { selector, useRecoilValue } from "recoil";
+import { selector } from "recoil";
 import { tokenState } from "./states";
+import APIs from "../api";
 
-const tokenSelector = selector({
-  key: "tokenSelector",
+export const apiSelector = selector({
+  key: "APIs",
   get: ({ get }) => {
     const token = get(tokenState);
-    console.log(token);
-    return token;
+
+    return new APIs(token);
   },
 });
-
-export default tokenSelector;
