@@ -1,6 +1,7 @@
 package kr.co.markncompany.mark.order.dto;
 
 import kr.co.markncompany.mark.common.BaseEntity;
+import kr.co.markncompany.mark.order.Menu;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,5 +21,22 @@ public class MenuDto extends BaseEntity {
     private LocalDateTime createdAt;
     private String modifiedBy;
     private LocalDateTime modifiedAt;
+
+    public MenuDto(Menu menu) {
+        setByMenu(menu);
+    }
+
+    private void setByMenu(Menu menu) {
+        id = menu.getId();
+        menuName = menu.getMenuName();
+        menuType = menu.getMenuType();
+        menuPrice = menu.getMenuPrice();
+        menuStock = menu.getMenuStock();
+
+        createdBy = menu.getCreatedBy();
+        createdAt = menu.getCreatedAt();
+        modifiedBy = menu.getModifiedBy();
+        modifiedAt = menu.getModifiedAt();
+    }
 
 }

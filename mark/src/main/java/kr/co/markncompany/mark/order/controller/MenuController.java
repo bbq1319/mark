@@ -1,10 +1,12 @@
 package kr.co.markncompany.mark.order.controller;
 
 import kr.co.markncompany.mark.order.Menu;
+import kr.co.markncompany.mark.order.dto.MenuDto;
 import kr.co.markncompany.mark.order.repository.MenuCustomRepository;
 import kr.co.markncompany.mark.order.repository.MenuRepository;
 import kr.co.markncompany.mark.order.transfer.OptionInfoResponse;
 import lombok.AllArgsConstructor;
+import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,9 +42,16 @@ public class MenuController {
         if (id.isPresent()) {
             String menuId = id.get();
             Menu menu = menuRepository.findById(menuId).orElseThrow();
+            MenuDto menuDto = new MenuDto(menu);
+
             List<OptionInfoResponse> optionDtoList = menuCustomRepository.getOptionInfoByMenuId(menu.getId());
             Map<String, List<OptionInfoResponse>> collect = optionDtoList.stream().collect(Collectors.groupingBy(OptionInfoResponse::getId));
-            return ResponseEntity.ok().body(collect);
+
+            JSONObject menuObject = new JSONObject();
+            menuObject.put("menu", menuDto);
+            menuObject.put("option", collect);
+
+            return ResponseEntity.ok().body(menuObject);
         }
 
         return ResponseEntity.badRequest().body("메뉴 ID 조회 실패");
