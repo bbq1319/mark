@@ -44,4 +44,14 @@ export default class APIs {
       return error.response;
     }
   };
+
+  getMenuInfo = async () => {
+    try {
+      const response = await this.axios.get("menu/MN0003");
+      return response;
+    } catch (error) {
+      console.error("에러메세지: ", error.message);
+      return error.response;
+    }
+  };
 }

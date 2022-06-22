@@ -27,6 +27,8 @@ export default function Home() {
   useEffect(() => {
     const getMenuList = async () => {
       const response = await APIs.getMenuList(token);
+      const res = await APIs.getMenuInfo(token);
+      console.log(res);
 
       if (response.status == 200) {
         setMenuList(response.data);

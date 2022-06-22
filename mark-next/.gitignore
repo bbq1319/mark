@@ -31,3 +31,13 @@ yarn-error.log*
 # vercel
 .vercel
 .DS_Store
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.zip

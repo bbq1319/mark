@@ -40,6 +40,9 @@ export default function SideNavBar() {
           </li>
         </Navbar>
       </SideNav>
+      <div>
+        <button>로그아웃</button>
+      </div>
     </SideNavContainer>
   );
 }
