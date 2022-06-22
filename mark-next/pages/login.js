@@ -5,23 +5,23 @@ import withReactContent from "sweetalert2-react-content";
 import { useRouter } from "next/router";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
-import { useApis } from "../hooks/useApis";
+import { useAPIs } from "../hooks/useAPIs";
 
 import { tokenState, loginState, loadingState } from "../recoil/states";
 import { networkError } from "../utils/modalContents";
 
 import styled from "@emotion/styled";
+import { colors } from "../styles/variables";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
-import { loginSelector } from "../recoil/selectors";
+import { useCallback, useEffect } from "react";
 
 export default function Login() {
   const router = useRouter();
-  const APIs = useApis();
-  const [token, setToken] = useRecoilState(tokenState);
-  const login = useRecoilValue(loginSelector);
-  // const [login, setLogin] = useRecoilState(loginState);
+  const APIs = useAPIs();
+
+  const setToken = useSetRecoilState(tokenState);
   const isLoaded = useSetRecoilState(loadingState);
 
   const MySwal = withReactContent(Swal);
@@ -32,7 +32,11 @@ export default function Login() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (loginData) => {
+  useEffect(() => {
+    router.prefetch("/");
+  }, []);
+
+  const onSubmit = useCallback(async (loginData) => {
     isLoaded(false);
     const response = await APIs.login(loginData);
     console.log("response==>", response);
@@ -49,11 +53,10 @@ export default function Login() {
     if (response != null && response.status == 200) {
       const resultToken = response.data.data.token;
       if (resultToken != null) setToken(resultToken);
-      console.log("로그인 토큰: ", resultToken);
 
       router.push("/");
     }
-  };
+  }, []);
 
   const openSwal = (errorType) => {
     MySwal.fire(errorType);
@@ -144,7 +147,7 @@ const LoginInput = styled.input`
   background-color: #5a515e;
 
   &:focus {
-    outline: 2px solid #2a2a3a;
+    outline: 2px solid ${colors.pink[0]};
   }
 
   &:-webkit-autofill,

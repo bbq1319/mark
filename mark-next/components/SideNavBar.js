@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { useApis } from "../hooks/useApis";
+import { useSetRecoilState } from "recoil";
+import { useAPIs } from "../hooks/useAPIs";
 
 import { tokenState } from "../recoil/states";
 
@@ -10,19 +10,17 @@ import Image from "next/image";
 
 import styled from "@emotion/styled";
 import { colors } from "../styles/variables";
-import { loginSelector } from "../recoil/selectors";
 
 export default function SideNavBar() {
   const router = useRouter();
-  const APIs = useApis();
+  const APIs = useAPIs();
   const setToken = useSetRecoilState(tokenState);
-  const sss = useRecoilValue(loginSelector);
 
   const onLogoutClick = () => {
-    console.log("APIs", sss);
     setToken("");
     router.push("/login");
   };
+
   return (
     <SideNavContainer>
       <SideNavHeader>
