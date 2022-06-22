@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
-import { useApis } from "../hooks/useApis";
+import { useAPIs } from "../hooks/useAPIs";
 import { tokenState } from "../recoil/states";
 
 import Swal from "sweetalert2";
@@ -10,19 +10,19 @@ import { expiredJwtException } from "../utils/modalContents";
 import Seo from "../components/Seo";
 
 export default function Home() {
-  const APIs = useApis();
+  const router = useRouter();
+  const APIs = useAPIs();
   const [token, setToken] = useRecoilState(tokenState);
   const [menuList, setMenuList] = useState([]);
-  const router = useRouter();
 
   const MySwal = withReactContent(Swal);
   const openSwal = (errorType) => {
     MySwal.fire(errorType);
   };
 
-  useEffect(() => {
-    if (token === "") router.push("/login");
-  }, []);
+  // useEffect(() => {
+  //   if (token === "") router.push("/login");
+  // }, []);
 
   useEffect(() => {
     const getMenuList = async () => {
