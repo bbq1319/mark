@@ -1,15 +1,28 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useApis } from "../hooks/useApis";
+
+import { tokenState } from "../recoil/states";
 
 import logo from "../public/innologo.png";
 import Image from "next/image";
 
 import styled from "@emotion/styled";
 import { colors } from "../styles/variables";
+import { loginSelector } from "../recoil/selectors";
 
 export default function SideNavBar() {
   const router = useRouter();
+  const APIs = useApis();
+  const setToken = useSetRecoilState(tokenState);
+  const sss = useRecoilValue(loginSelector);
 
+  const onLogoutClick = () => {
+    console.log("APIs", sss);
+    setToken("");
+    router.push("/login");
+  };
   return (
     <SideNavContainer>
       <SideNavHeader>
@@ -19,7 +32,7 @@ export default function SideNavBar() {
           </a>
         </Link>
       </SideNavHeader>
-      <SideNavHr />
+
       <SideNav>
         <Navbar>
           <li>
@@ -40,15 +53,15 @@ export default function SideNavBar() {
           </li>
         </Navbar>
       </SideNav>
-      <div>
-        <button>로그아웃</button>
-      </div>
+
+      <LogoutButton onClick={onLogoutClick}>로그아웃</LogoutButton>
     </SideNavContainer>
   );
 }
 
 const SideNavContainer = styled.aside`
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -70,25 +83,13 @@ const SideNavHeader = styled.div`
   padding: 1.5rem 2rem;
 `;
 
-const SideNavHr = styled.hr`
-  height: 2px;
-  border: 0;
-  border-top: none;
-  border-top: 1px solid;
-  opacity: 0.25;
-  background-image: linear-gradient(
-    90deg,
-    hsla(0, 0%, 100%, 0),
-    #fff,
-    hsla(0, 0%, 100%, 0)
-  );
-`;
-
 const SideNav = styled.nav`
   display: block;
   overflow: auto;
-  height: calc(100vh - 360px);
+  flex-basis: calc(100vh - 200px);
+  flex-shrink: 0;
   color: #fff;
+  overflow-y: hidden;
 `;
 
 const Navbar = styled.ul`
@@ -119,4 +120,14 @@ const NavMenu = styled.a`
   &:hover {
     background-color: ${(props) => !props.active && "hsla(0, 0%, 78%, 0.2)"};
   }
+`;
+
+const LogoutButton = styled.button`
+  padding: 0.75rem 1.5rem;
+  margin: 0 1rem;
+  margin-bottom: 1.5px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  background-image: linear-gradient(195deg, #ec407a, #d81b60);
 `;

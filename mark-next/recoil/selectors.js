@@ -10,3 +10,12 @@ export const apiSelector = selector({
     return new APIs(token);
   },
 });
+
+export const loginSelector = selector({
+  key: "loginSelector",
+  get: ({ get }) => {
+    const token = get(tokenState);
+
+    return token !== "" ? true : false;
+  },
+});
