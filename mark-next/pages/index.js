@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useApis } from "../hooks/useApis";
 import { tokenState } from "../recoil/states";
 
@@ -27,8 +27,8 @@ export default function Home() {
   useEffect(() => {
     const getMenuList = async () => {
       const response = await APIs.getMenuList(token);
-      const res = await APIs.getMenuInfo(token);
-      console.log(res);
+      // const res = await APIs.getMenuInfo(token);
+      // console.log(res);
 
       if (response.status == 200) {
         setMenuList(response.data);
@@ -45,7 +45,7 @@ export default function Home() {
       }
     };
 
-    getMenuList();
+    // getMenuList();
   }, []);
 
   return (
@@ -56,6 +56,7 @@ export default function Home() {
           return <p key={menu.id}>{menu.menuName}</p>;
         })}
       </div>
+      <div>아메아메아메아메리카노</div>
     </div>
   );
 }

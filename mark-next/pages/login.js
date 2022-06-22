@@ -1,11 +1,9 @@
 import Seo from "../components/Seo";
-
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import { useApis } from "../hooks/useApis";
 
@@ -16,12 +14,14 @@ import styled from "@emotion/styled";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
+import { loginSelector } from "../recoil/selectors";
 
 export default function Login() {
   const router = useRouter();
   const APIs = useApis();
   const [token, setToken] = useRecoilState(tokenState);
-  const [login, setLogin] = useRecoilState(loginState);
+  const login = useRecoilValue(loginSelector);
+  // const [login, setLogin] = useRecoilState(loginState);
   const isLoaded = useSetRecoilState(loadingState);
 
   const MySwal = withReactContent(Swal);
@@ -31,12 +31,6 @@ export default function Login() {
     watch,
     formState: { errors },
   } = useForm();
-
-  useEffect(() => {
-    if (token && login) {
-      // router.push("/");
-    }
-  }, []);
 
   const onSubmit = async (loginData) => {
     isLoaded(false);
@@ -55,9 +49,8 @@ export default function Login() {
     if (response != null && response.status == 200) {
       const resultToken = response.data.data.token;
       if (resultToken != null) setToken(resultToken);
-      console.log(resultToken);
-      // response.data.data.token ? setToken(response.data.data.token) : null;
-      setLogin(true);
+      console.log("로그인 토큰: ", resultToken);
+
       router.push("/");
     }
   };

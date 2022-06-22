@@ -10,11 +10,11 @@ export const tokenState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const loginState = atom({
-  key: "loginState",
-  default: false,
-  effects_UNSTABLE: [persistAtom],
-});
+// export const loginState = atom({
+//   key: "loginState",
+//   default: false,
+//   effects_UNSTABLE: [persistAtom],
+// });
 
 export const loadingState = atom({
   key: "loadingState",
