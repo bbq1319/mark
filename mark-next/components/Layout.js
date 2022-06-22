@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
+import { useApis } from "../hooks/useApis";
 import { tokenState, loadingState } from "../recoil/states";
-import { apiSelector } from "../recoil/selectors";
 import SideNavBar from "./SideNavBar";
 import Spinner from "./Spinner";
 import styled from "@emotion/styled";
@@ -10,7 +10,7 @@ import styled from "@emotion/styled";
 export default function Layout({ children }) {
   const { pathname } = useRouter();
   const isLoaded = useRecoilValue(loadingState);
-  const APIs = useRecoilValue(apiSelector);
+  const APIs = useApis();
   const token = useRecoilValue(tokenState);
 
   useEffect(() => {

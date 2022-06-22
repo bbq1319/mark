@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { apiSelector } from "../recoil/selectors";
+import { useApis } from "../hooks/useApis";
 import { tokenState } from "../recoil/states";
 
 import Swal from "sweetalert2";
@@ -10,7 +10,7 @@ import { expiredJwtException } from "../utils/modalContents";
 import Seo from "../components/Seo";
 
 export default function Home() {
-  const APIs = useRecoilValue(apiSelector);
+  const APIs = useApis();
   const [token, setToken] = useRecoilState(tokenState);
   const [menuList, setMenuList] = useState([]);
   const router = useRouter();
