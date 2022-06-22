@@ -21,7 +21,7 @@ export default function Login() {
   const router = useRouter();
   const APIs = useAPIs();
 
-  const setToken = useSetRecoilState(tokenState);
+  const [token, setToken] = useRecoilState(tokenState);
   const isLoaded = useSetRecoilState(loadingState);
 
   const MySwal = withReactContent(Swal);
@@ -34,7 +34,10 @@ export default function Login() {
 
   useEffect(() => {
     router.prefetch("/");
-  }, []);
+    if (token) {
+      router.push("/");
+    }
+  }, [token]);
 
   const onSubmit = useCallback(async (loginData) => {
     isLoaded(false);

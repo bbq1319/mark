@@ -20,9 +20,9 @@ export default function Home() {
     MySwal.fire(errorType);
   };
 
-  useEffect(() => {
-    if (token === "") router.push("/login");
-  }, []);
+  // useEffect(() => {
+  //   if (token === "") router.push("/login");
+  // }, []);
 
   useEffect(() => {
     const getMenuList = async () => {
