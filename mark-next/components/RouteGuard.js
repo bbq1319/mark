@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
+import { useAPIs } from "../hooks/useAPIs";
 import { tokenState } from "../recoil/states";
 
 const RouteGuard = ({ children }) => {
   const router = useRouter();
+  const APIs = useAPIs();
   const [authorized, setAuthorized] = useState(false);
+
   const token = useRecoilValue(tokenState);
 
   useEffect(() => {
@@ -23,11 +26,12 @@ const RouteGuard = ({ children }) => {
       router.events.off("routeChangeStart", hideContent);
       router.events.off("routeChangeComplete", authCheck);
     };
-  }, []);
+  }, [token]);
 
   const authCheck = (url) => {
     const publicPaths = ["/login"];
     const path = url.split("?")[0];
+
     if (!token && !publicPaths.includes(path)) {
       setAuthorized(false);
       router.push("/login");

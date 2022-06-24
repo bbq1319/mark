@@ -37,7 +37,7 @@ export default function Login() {
     if (token) {
       router.push("/");
     }
-  }, [token]);
+  }, []);
 
   const onSubmit = useCallback(async (loginData) => {
     isLoaded(false);
